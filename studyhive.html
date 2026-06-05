@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudyHive — Student Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f0f4ff;
+  --bg2: #ffffff;
+  --bg3: #e8eeff;
+  --text: #1a1d2e;
+  --muted: #6b7280;
+  --border: #dde3f5;
+  --yellow: #fbbf24;
+  --yellow-bg: #fffbeb;
+  --blue: #3b82f6;
+  --blue-bg: #eff6ff;
+  --green: #10b981;
+  --green-bg: #ecfdf5;
+  --purple: #8b5cf6;
+  --purple-bg: #f5f3ff;
+  --red: #ef4444;
+  --red-bg: #fef2f2;
+  --orange: #f97316;
+  --orange-bg: #fff7ed;
+  --radius: 16px;
+  --shadow: 0 4px 24px rgba(59,82,246,0.08);
+  --font: 'Nunito', sans-serif;
+  --font2: 'Space Grotesk', sans-serif;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--font); min-height: 100vh; }
+
+/* HEADER */
+.header {
+  background: var(--bg2);
+  border-bottom: 2px solid var(--border);
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow);
+}
+
+.logo {
+  font-family: var(--font2);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--blue);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-icon { font-size: 26px; }
+
+.nav { display: flex; gap: 6px; }
+.nav-btn {
+  background: none;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.nav-btn:hover { background: var(--bg3); color: var(--text); }
+.nav-btn.active { background: var(--blue); color: #fff; }
+
+/* MAIN */
+.main { max-width: 900px; margin: 0 auto; padding: 32px 20px 60px; }
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  border-radius: 20px;
+  padding: 32px 36px;
+  margin-bottom: 32px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '🐝';
+  position: absolute;
+  right: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 80px;
+  opacity: 0.25;
+}
+
+.hero h1 { font-size: 30px; font-weight: 900; margin-bottom: 6px; }
+.hero p { font-size: 15px; opacity: 0.85; max-width: 500px; line-height: 1.6; }
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+@media (max-width: 600px) { .tools-grid { grid-template-columns: 1fr; } .nav span { display: none; } }
+
+.tool-card {
+  background: var(--bg2);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.tool-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+.tool-card.tc-flash:hover { border-color: var(--yellow); }
+.tool-card.tc-hw:hover { border-color: var(--green); }
+.tool-card.tc-timer:hover { border-color: var(--blue); }
+.tool-card.tc-quiz:hover { border-color: var(--purple); }
+
+.tool-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px;
+  flex-shrink: 0;
+}
+
+.tc-flash .tool-icon { background: var(--yellow-bg); }
+.tc-hw .tool-icon { background: var(--green-bg); }
+.tc-timer .tool-icon { background: var(--blue-bg); }
+.tc-quiz .tool-icon { background: var(--purple-bg); }
+
+.tool-info h3 { font-size: 16px; font-weight: 800; margin-bottom: 3px; }
+.tool-info p { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+/* PANELS */
+.panel { display: none; }
+.panel.active { display: block; }
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.panel-icon {
+  width: 46px; height: 46px;
+  border-radius: 13px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px;
+}
+
+.panel-title { font-size: 24px; font-weight: 900; }
+.panel-sub { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+.back-btn {
+  background: var(--bg3);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  margin-left: auto;
+  transition: all 0.2s;
+}
+.back-btn:hover { background: var(--border); color: var(--text); }
+
+/* CARD UI */
+.card {
+  background: var(--bg2);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 16px;
+}
+
+/* INPUT STYLES */
+.input-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+.input-group { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 140px; }
+label { font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: 0.5px; text-transform: uppercase; }
+input[type=text], input[type=date], select, textarea {
+  background: var(--bg);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-family: var(--font);
+  font-size: 14px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+input[type=text]:focus, input[type=date]:focus, select:focus, textarea:focus { border-color: var(--blue); }
+textarea { resize: vertical; min-height: 80px; }
+
+.btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 800;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn-blue { background: var(--blue); color: #fff; }
+.btn-blue:hover { background: #2563eb; }
+.btn-green { background: var(--green); color: #fff; }
+.btn-green:hover { background: #059669; }
+.btn-yellow { background: var(--yellow); color: #1a1d2e; }
+.btn-yellow:hover { background: #f59e0b; }
+.btn-red { background: var(--red-bg); color: var(--red); border: 2px solid #fca5a5; }
+.btn-red:hover { background: var(--red); color: #fff; }
+.btn-purple { background: var(--purple); color: #fff; }
+.btn-purple:hover { background: #7c3aed; }
+.btn-ghost { background: var(--bg3); color: var(--muted); }
+.btn-ghost:hover { background: var(--border); color: var(--text); }
+
+/* ═══════════════════════════════
+   FLASHCARDS
+═══════════════════════════════ */
+.flashcard-scene {
+  perspective: 1000px;
+  margin: 24px auto;
+  width: 100%;
+  max-width: 480px;
+  height: 220px;
+  cursor: pointer;
+}
+
+.flashcard-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease;
+}
+
+.flashcard-inner.flipped { transform: rotateY(180deg); }
+
+.flashcard-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  text-align: center;
+}
+
+.flashcard-front {
+  background: linear-gradient(135deg, #fbbf24 0%, #f97316 100%);
+  color: #fff;
+}
+
+.flashcard-back {
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  color: #fff;
+  transform: rotateY(180deg);
+}
+
+.flashcard-label {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin-bottom: 12px;
+}
+
+.flashcard-text { font-size: 22px; font-weight: 800; line-height: 1.4; }
+.flashcard-hint { font-size: 12px; opacity: 0.6; margin-top: 14px; }
+
+.fc-nav { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 16px; }
+.fc-count { font-size: 14px; font-weight: 700; color: var(--muted); }
+
+.fc-list { margin-top: 20px; }
+.fc-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  gap: 12px;
+}
+.fc-item-text { flex: 1; }
+.fc-term { font-size: 14px; font-weight: 700; }
+.fc-def { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+/* ═══════════════════════════════
+   HOMEWORK TRACKER
+═══════════════════════════════ */
+.hw-list { margin-top: 8px; }
+
+.hw-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  transition: all 0.2s;
+}
+
+.hw-item.done { opacity: 0.5; }
+.hw-item.done .hw-title { text-decoration: line-through; }
+
+.hw-check {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+  transition: all 0.2s;
+  background: var(--bg2);
+}
+
+.hw-check.checked { background: var(--green); border-color: var(--green); color: #fff; }
+
+.hw-info { flex: 1; }
+.hw-title { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+.hw-meta { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.hw-tag {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.tag-math { background: #fef9c3; color: #854d0e; }
+.tag-science { background: #dcfce7; color: #166534; }
+.tag-english { background: #dbeafe; color: #1e40af; }
+.tag-history { background: #fce7f3; color: #9d174d; }
+.tag-other { background: var(--bg3); color: var(--muted); }
+
+.priority-high { color: var(--red); font-size: 11px; font-weight: 700; }
+.priority-med { color: var(--orange); font-size: 11px; font-weight: 700; }
+.priority-low { color: var(--green); font-size: 11px; font-weight: 700; }
+
+.hw-due { font-size: 11px; color: var(--muted); }
+.hw-due.overdue { color: var(--red); font-weight: 700; }
+
+.hw-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--muted);
+  font-size: 15px;
+}
+.hw-empty div { font-size: 40px; margin-bottom: 10px; }
+
+/* ═══════════════════════════════
+   STUDY TIMER
+═══════════════════════════════ */
+.timer-wrap {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.timer-modes { display: flex; gap: 8px; justify-content: center; margin-bottom: 28px; flex-wrap: wrap; }
+.mode-btn {
+  padding: 8px 18px;
+  border-radius: 10px;
+  border: 2px solid var(--border);
+  background: var(--bg);
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--muted);
+}
+.mode-btn.active { background: var(--blue); border-color: var(--blue); color: #fff; }
+
+.timer-circle {
+  width: 220px;
+  height: 220px;
+  margin: 0 auto 28px;
+  position: relative;
+}
+
+.timer-svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.timer-bg { fill: none; stroke: var(--bg3); stroke-width: 10; }
+.timer-progress { fill: none; stroke: var(--blue); stroke-width: 10; stroke-linecap: round; transition: stroke-dashoffset 1s linear; }
+
+.timer-display {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.timer-time {
+  font-family: var(--font2);
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1;
+}
+
+.timer-label { font-size: 12px; color: var(--muted); font-weight: 700; margin-top: 4px; letter-spacing: 1px; text-transform: uppercase; }
+
+.timer-controls { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+.timer-sessions {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.session-dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background 0.3s;
+}
+.session-dot.done { background: var(--green); }
+.session-dot.current { background: var(--blue); }
+
+.timer-tip {
+  margin-top: 20px;
+  background: var(--blue-bg);
+  border: 2px solid #bfdbfe;
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-size: 13px;
+  color: #1e40af;
+  line-height: 1.6;
+  text-align: left;
+}
+
+/* ═══════════════════════════════
+   TRIVIA QUIZ
+═══════════════════════════════ */
+.quiz-subjects { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+.subj-btn {
+  padding: 7px 16px;
+  border-radius: 10px;
+  border: 2px solid var(--border);
+  background: var(--bg);
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--muted);
+}
+.subj-btn:hover { border-color: var(--purple); color: var(--purple); }
+.subj-btn.active { background: var(--purple); border-color: var(--purple); color: #fff; }
+
+.quiz-progress-bar {
+  height: 8px;
+  background: var(--bg3);
+  border-radius: 4px;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+.quiz-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--blue), var(--purple));
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+.quiz-q-num { font-size: 12px; color: var(--muted); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+.quiz-question { font-size: 20px; font-weight: 800; margin-bottom: 24px; line-height: 1.4; }
+
+.quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+@media (max-width: 500px) { .quiz-options { grid-template-columns: 1fr; } }
+
+.quiz-opt {
+  background: var(--bg);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+  color: var(--text);
+}
+.quiz-opt:hover:not(:disabled) { border-color: var(--purple); background: var(--purple-bg); }
+.quiz-opt.correct { border-color: var(--green); background: var(--green-bg); color: #065f46; }
+.quiz-opt.wrong { border-color: var(--red); background: var(--red-bg); color: #991b1b; }
+.quiz-opt:disabled { cursor: default; }
+
+.quiz-feedback {
+  font-size: 14px;
+  font-weight: 700;
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  display: none;
+}
+.quiz-feedback.show { display: block; }
+.quiz-feedback.correct-fb { background: var(--green-bg); color: #065f46; border: 2px solid #a7f3d0; }
+.quiz-feedback.wrong-fb { background: var(--red-bg); color: #991b1b; border: 2px solid #fca5a5; }
+
+.quiz-score-card {
+  text-align: center;
+  padding: 32px 20px;
+}
+.quiz-score-emoji { font-size: 64px; margin-bottom: 16px; }
+.quiz-score-title { font-size: 28px; font-weight: 900; margin-bottom: 8px; }
+.quiz-score-num { font-size: 48px; font-weight: 900; color: var(--purple); margin-bottom: 16px; }
+.quiz-score-sub { font-size: 15px; color: var(--muted); margin-bottom: 24px; }
+
+.subject-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 6px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.badge-math { background: #fef9c3; color: #854d0e; }
+.badge-science { background: #dcfce7; color: #166534; }
+.badge-english { background: #dbeafe; color: #1e40af; }
+.badge-history { background: #fce7f3; color: #9d174d; }
+.badge-mixed { background: var(--purple-bg); color: var(--purple); }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo"><span class="logo-icon">🐝</span> StudyHive</div>
+  <nav class="nav">
+    <button class="nav-btn active" onclick="showHome()">🏠 <span>Home</span></button>
+    <button class="nav-btn" onclick="showPanel('flash')">📚 <span>Flashcards</span></button>
+    <button class="nav-btn" onclick="showPanel('hw')">✅ <span>Homework</span></button>
+    <button class="nav-btn" onclick="showPanel('timer')">⏱️ <span>Timer</span></button>
+    <button class="nav-btn" onclick="showPanel('quiz')">🧠 <span>Quiz</span></button>
+  </nav>
+</header>
+
+<main class="main">
+
+  <!-- HOME -->
+  <div id="home" class="panel active">
+    <div class="hero">
+      <h1>Welcome to StudyHive 🐝</h1>
+      <p>Your all-in-one study toolkit. Make flashcards, track homework, set a study timer, and test your knowledge — all in one place.</p>
+    </div>
+    <div class="tools-grid">
+      <div class="tool-card tc-flash" onclick="showPanel('flash')">
+        <div class="tool-icon">📚</div>
+        <div class="tool-info">
+          <h3>Flashcard Maker</h3>
+          <p>Create and study your own flashcards for any subject</p>
+        </div>
+      </div>
+      <div class="tool-card tc-hw" onclick="showPanel('hw')">
+        <div class="tool-icon">✅</div>
+        <div class="tool-info">
+          <h3>Homework Tracker</h3>
+          <p>Keep track of assignments with due dates and priorities</p>
+        </div>
+      </div>
+      <div class="tool-card tc-timer" onclick="showPanel('timer')">
+        <div class="tool-icon">⏱️</div>
+        <div class="tool-info">
+          <h3>Study Timer</h3>
+          <p>Pomodoro timer to keep you focused and on track</p>
+        </div>
+      </div>
+      <div class="tool-card tc-quiz" onclick="showPanel('quiz')">
+        <div class="tool-icon">🧠</div>
+        <div class="tool-info">
+          <h3>Trivia Quiz</h3>
+          <p>Test your knowledge across Math, Science, English & History</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLASHCARDS -->
+  <div id="flash" class="panel">
+    <div class="panel-header">
+      <div class="panel-icon" style="background:var(--yellow-bg)">📚</div>
+      <div>
+        <div class="panel-title">Flashcard Maker</div>
+        <div class="panel-sub">Add cards below, then flip through to study</div>
+      </div>
+      <button class="back-btn" onclick="showHome()">← Back</button>
+    </div>
+
+    <div class="card">
+      <div class="input-row">
+        <div class="input-group">
+          <label>Term / Question</label>
+          <input type="text" id="fc-term" placeholder="e.g. Photosynthesis" />
+        </div>
+        <div class="input-group">
+          <label>Definition / Answer</label>
+          <input type="text" id="fc-def" placeholder="e.g. Process plants use to make food" />
+        </div>
+      </div>
+      <button class="btn btn-yellow" onclick="addCard()">➕ Add Card</button>
+    </div>
+
+    <div id="fc-study-wrap" style="display:none">
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+          <div style="font-size:13px;font-weight:700;color:var(--muted)">Click card to flip!</div>
+          <div class="fc-count" id="fc-count">Card 1 of 1</div>
+        </div>
+        <div class="flashcard-scene" onclick="flipCard()">
+          <div class="flashcard-inner" id="fc-inner">
+            <div class="flashcard-face flashcard-front">
+              <div class="flashcard-label">Term</div>
+              <div class="flashcard-text" id="fc-front-text"></div>
+              <div class="flashcard-hint">Click to see answer →</div>
+            </div>
+            <div class="flashcard-face flashcard-back">
+              <div class="flashcard-label">Definition</div>
+              <div class="flashcard-text" id="fc-back-text"></div>
+              <div class="flashcard-hint">Click to flip back</div>
+            </div>
+          </div>
+        </div>
+        <div class="fc-nav">
+          <button class="btn btn-ghost" onclick="prevCard()">← Prev</button>
+          <button class="btn btn-yellow" onclick="shuffleCards()">🔀 Shuffle</button>
+          <button class="btn btn-ghost" onclick="nextCard()">Next →</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="fc-list" class="fc-list"></div>
+  </div>
+
+  <!-- HOMEWORK TRACKER -->
+  <div id="hw" class="panel">
+    <div class="panel-header">
+      <div class="panel-icon" style="background:var(--green-bg)">✅</div>
+      <div>
+        <div class="panel-title">Homework Tracker</div>
+        <div class="panel-sub">Stay on top of all your assignments</div>
+      </div>
+      <button class="back-btn" onclick="showHome()">← Back</button>
+    </div>
+
+    <div class="card">
+      <div class="input-row">
+        <div class="input-group" style="flex:2">
+          <label>Assignment</label>
+          <input type="text" id="hw-title" placeholder="e.g. Chapter 5 Reading" />
+        </div>
+        <div class="input-group">
+          <label>Subject</label>
+          <select id="hw-subject">
+            <option value="math">📐 Math</option>
+            <option value="science">🔬 Science</option>
+            <option value="english">📖 English</option>
+            <option value="history">🏛️ History</option>
+            <option value="other">📁 Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="input-row">
+        <div class="input-group">
+          <label>Due Date</label>
+          <input type="date" id="hw-due" />
+        </div>
+        <div class="input-group">
+          <label>Priority</label>
+          <select id="hw-priority">
+            <option value="high">🔴 High</option>
+            <option value="med">🟡 Medium</option>
+            <option value="low">🟢 Low</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-green" onclick="addHomework()">➕ Add Assignment</button>
+    </div>
+
+    <div class="hw-list" id="hw-list">
+      <div class="hw-empty"><div>📋</div>No assignments yet — add one above!</div>
+    </div>
+  </div>
+
+  <!-- TIMER -->
+  <div id="timer" class="panel">
+    <div class="panel-header">
+      <div class="panel-icon" style="background:var(--blue-bg)">⏱️</div>
+      <div>
+        <div class="panel-title">Study Timer</div>
+        <div class="panel-sub">Pomodoro technique — study hard, break smart</div>
+      </div>
+      <button class="back-btn" onclick="showHome()">← Back</button>
+    </div>
+
+    <div class="card">
+      <div class="timer-wrap">
+        <div class="timer-modes">
+          <button class="mode-btn active" onclick="setMode(25,'Study Session',this)">🧠 25 min Study</button>
+          <button class="mode-btn" onclick="setMode(5,'Short Break',this)">☕ 5 min Break</button>
+          <button class="mode-btn" onclick="setMode(15,'Long Break',this)">🛋️ 15 min Break</button>
+          <button class="mode-btn" onclick="setMode(45,'Deep Focus',this)">🔥 45 min Focus</button>
+        </div>
+
+        <div class="timer-circle">
+          <svg class="timer-svg" viewBox="0 0 100 100">
+            <circle class="timer-bg" cx="50" cy="50" r="42"/>
+            <circle class="timer-progress" id="timer-ring" cx="50" cy="50" r="42"
+              stroke-dasharray="263.9"
+              stroke-dashoffset="0"/>
+          </svg>
+          <div class="timer-display">
+            <div class="timer-time" id="timer-display">25:00</div>
+            <div class="timer-label" id="timer-label">Study Session</div>
+          </div>
+        </div>
+
+        <div class="timer-controls">
+          <button class="btn btn-blue" id="timer-start-btn" onclick="startTimer()">▶ Start</button>
+          <button class="btn btn-ghost" onclick="pauseTimer()">⏸ Pause</button>
+          <button class="btn btn-ghost" onclick="resetTimer()">↺ Reset</button>
+        </div>
+
+        <div class="timer-sessions" id="timer-sessions">
+          <div class="session-dot current"></div>
+          <div class="session-dot"></div>
+          <div class="session-dot"></div>
+          <div class="session-dot"></div>
+        </div>
+      </div>
+
+      <div class="timer-tip">
+        💡 <strong>Pomodoro Technique:</strong> Study for 25 minutes, then take a 5-minute break. After 4 sessions, take a longer 15-minute break. This method is proven to improve focus and reduce burnout!
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quiz" class="panel">
+    <div class="panel-header">
+      <div class="panel-icon" style="background:var(--purple-bg)">🧠</div>
+      <div>
+        <div class="panel-title">Trivia Quiz</div>
+        <div class="panel-sub">Test your knowledge across subjects</div>
+      </div>
+      <button class="back-btn" onclick="showHome()">← Back</button>
+    </div>
+
+    <div class="card" id="quiz-setup">
+      <div style="font-size:16px;font-weight:800;margin-bottom:12px;">Choose a Subject</div>
+      <div class="quiz-subjects">
+        <button class="subj-btn active" onclick="selectSubject('mixed',this)">🌟 Mixed</button>
+        <button class="subj-btn" onclick="selectSubject('math',this)">📐 Math</button>
+        <button class="subj-btn" onclick="selectSubject('science',this)">🔬 Science</button>
+        <button class="subj-btn" onclick="selectSubject('english',this)">📖 English</button>
+        <button class="subj-btn" onclick="selectSubject('history',this)">🏛️ History</button>
+      </div>
+      <button class="btn btn-purple" onclick="startQuiz()" style="margin-top:8px;">🧠 Start Quiz →</button>
+    </div>
+
+    <div class="card" id="quiz-game" style="display:none">
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quiz-progress"></div></div>
+      <div class="subject-badge" id="quiz-subj-badge"></div>
+      <div class="quiz-q-num" id="quiz-q-num"></div>
+      <div class="quiz-question" id="quiz-question"></div>
+      <div class="quiz-options" id="quiz-options"></div>
+      <div class="quiz-feedback" id="quiz-feedback"></div>
+      <button class="btn btn-purple" id="quiz-next-btn" onclick="nextQuestion()" style="display:none">Next Question →</button>
+    </div>
+
+    <div class="card" id="quiz-results" style="display:none">
+      <div class="quiz-score-card">
+        <div class="quiz-score-emoji" id="result-emoji"></div>
+        <div class="quiz-score-title" id="result-title"></div>
+        <div class="quiz-score-num" id="result-score"></div>
+        <div class="quiz-score-sub" id="result-sub"></div>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+          <button class="btn btn-purple" onclick="startQuiz()">🔄 Play Again</button>
+          <button class="btn btn-ghost" onclick="document.getElementById('quiz-setup').style.display='block';document.getElementById('quiz-results').style.display='none'">Change Subject</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+// ═══════════════ NAVIGATION ═══════════════
+function showHome() {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('home').classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.nav-btn')[0].classList.add('active');
+}
+
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const map = {flash:1,hw:2,timer:3,quiz:4};
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.nav-btn')[map[id]].classList.add('active');
+}
+
+// ═══════════════ FLASHCARDS ═══════════════
+let cards = [];
+let currentCard = 0;
+
+function addCard() {
+  const term = document.getElementById('fc-term').value.trim();
+  const def = document.getElementById('fc-def').value.trim();
+  if (!term || !def) { alert('Please fill in both the term and definition!'); return; }
+  cards.push({ term, def });
+  document.getElementById('fc-term').value = '';
+  document.getElementById('fc-def').value = '';
+  renderCards();
+}
+
+function renderCards() {
+  const list = document.getElementById('fc-list');
+  const wrap = document.getElementById('fc-study-wrap');
+  if (cards.length === 0) { list.innerHTML = ''; wrap.style.display = 'none'; return; }
+  wrap.style.display = 'block';
+  currentCard = Math.min(currentCard, cards.length - 1);
+  showCard(currentCard);
+  list.innerHTML = cards.map((c, i) => `
+    <div class="fc-item">
+      <div class="fc-item-text">
+        <div class="fc-term">${c.term}</div>
+        <div class="fc-def">${c.def}</div>
+      </div>
+      <button class="btn btn-red" style="padding:6px 12px;font-size:12px;" onclick="deleteCard(${i})">🗑</button>
+    </div>
+  `).join('');
+}
+
+function showCard(i) {
+  document.getElementById('fc-inner').classList.remove('flipped');
+  document.getElementById('fc-front-text').textContent = cards[i].term;
+  document.getElementById('fc-back-text').textContent = cards[i].def;
+  document.getElementById('fc-count').textContent = `Card ${i+1} of ${cards.length}`;
+}
+
+function flipCard() { document.getElementById('fc-inner').classList.toggle('flipped'); }
+function nextCard() { if (cards.length === 0) return; currentCard = (currentCard + 1) % cards.length; showCard(currentCard); }
+function prevCard() { if (cards.length === 0) return; currentCard = (currentCard - 1 + cards.length) % cards.length; showCard(currentCard); }
+function deleteCard(i) { cards.splice(i, 1); if (currentCard >= cards.length) currentCard = 0; renderCards(); }
+function shuffleCards() { cards.sort(() => Math.random() - 0.5); currentCard = 0; renderCards(); }
+
+// ═══════════════ HOMEWORK ═══════════════
+let homework = [];
+
+function addHomework() {
+  const title = document.getElementById('hw-title').value.trim();
+  const subject = document.getElementById('hw-subject').value;
+  const due = document.getElementById('hw-due').value;
+  const priority = document.getElementById('hw-priority').value;
+  if (!title) { alert('Please enter an assignment name!'); return; }
+  homework.push({ id: Date.now(), title, subject, due, priority, done: false });
+  document.getElementById('hw-title').value = '';
+  renderHomework();
+}
+
+function renderHomework() {
+  const list = document.getElementById('hw-list');
+  if (homework.length === 0) {
+    list.innerHTML = '<div class="hw-empty"><div>📋</div>No assignments yet — add one above!</div>';
+    return;
+  }
+  const sorted = [...homework].sort((a,b) => {
+    if (a.done !== b.done) return a.done ? 1 : -1;
+    const po = {high:0,med:1,low:2};
+    return po[a.priority] - po[b.priority];
+  });
+  list.innerHTML = sorted.map(hw => {
+    const today = new Date().toISOString().split('T')[0];
+    const isOverdue = hw.due && hw.due < today && !hw.done;
+    const subjectIcons = {math:'📐',science:'🔬',english:'📖',history:'🏛️',other:'📁'};
+    return `
+    <div class="hw-item ${hw.done ? 'done' : ''}">
+      <div class="hw-check ${hw.done ? 'checked' : ''}" onclick="toggleHW(${hw.id})">${hw.done ? '✓' : ''}</div>
+      <div class="hw-info">
+        <div class="hw-title">${hw.title}</div>
+        <div class="hw-meta">
+          <span class="hw-tag tag-${hw.subject}">${subjectIcons[hw.subject]} ${hw.subject.charAt(0).toUpperCase()+hw.subject.slice(1)}</span>
+          ${hw.due ? `<span class="hw-due ${isOverdue ? 'overdue' : ''}">📅 ${isOverdue ? 'OVERDUE: ' : ''}${hw.due}</span>` : ''}
+          <span class="priority-${hw.priority}">${hw.priority === 'high' ? '🔴 High' : hw.priority === 'med' ? '🟡 Medium' : '🟢 Low'}</span>
+        </div>
+      </div>
+      <button class="btn btn-red" style="padding:6px 12px;font-size:12px;" onclick="deleteHW(${hw.id})">🗑</button>
+    </div>`;
+  }).join('');
+}
+
+function toggleHW(id) {
+  const item = homework.find(h => h.id === id);
+  if (item) { item.done = !item.done; renderHomework(); }
+}
+
+function deleteHW(id) {
+  homework = homework.filter(h => h.id !== id);
+  renderHomework();
+}
+
+// ═══════════════ TIMER ═══════════════
+let timerInterval = null;
+let timerSeconds = 25 * 60;
+let timerTotal = 25 * 60;
+let timerRunning = false;
+let completedSessions = 0;
+let currentMode = 'Study Session';
+
+function setMode(mins, label, btn) {
+  if (timerRunning) resetTimer();
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  timerSeconds = mins * 60;
+  timerTotal = mins * 60;
+  currentMode = label;
+  document.getElementById('timer-label').textContent = label;
+  updateTimerDisplay();
+  updateRing();
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(timerSeconds / 60).toString().padStart(2,'0');
+  const s = (timerSeconds % 60).toString().padStart(2,'0');
+  document.getElementById('timer-display').textContent = `${m}:${s}`;
+}
+
+function updateRing() {
+  const circumference = 263.9;
+  const offset = circumference * (1 - timerSeconds / timerTotal);
+  document.getElementById('timer-ring').style.strokeDashoffset = offset;
+  const pct = timerSeconds / timerTotal;
+  const color = pct > 0.5 ? '#3b82f6' : pct > 0.25 ? '#f97316' : '#ef4444';
+  document.getElementById('timer-ring').style.stroke = color;
+}
+
+function startTimer() {
+  if (timerRunning) return;
+  timerRunning = true;
+  document.getElementById('timer-start-btn').textContent = '▶ Running...';
+  timerInterval = setInterval(() => {
+    timerSeconds--;
+    updateTimerDisplay();
+    updateRing();
+    if (timerSeconds <= 0) {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      document.getElementById('timer-start-btn').textContent = '▶ Start';
+      if (currentMode === 'Study Session' || currentMode === 'Deep Focus') {
+        completedSessions = Math.min(completedSessions + 1, 4);
+        updateSessionDots();
+      }
+      timerSeconds = timerTotal;
+      updateTimerDisplay();
+      updateRing();
+      // simple beep via AudioContext
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain); gain.connect(ctx.destination);
+        osc.frequency.value = 880;
+        gain.gain.setValueAtTime(0.3, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1);
+        osc.start(); osc.stop(ctx.currentTime + 1);
+      } catch(e) {}
+      alert(`⏰ ${currentMode} complete! Time for a break.`);
+    }
+  }, 1000);
+}
+
+function pauseTimer() {
+  if (!timerRunning) return;
+  clearInterval(timerInterval);
+  timerRunning = false;
+  document.getElementById('timer-start-btn').textContent = '▶ Resume';
+}
+
+function resetTimer() {
+  clearInterval(timerInterval);
+  timerRunning = false;
+  timerSeconds = timerTotal;
+  document.getElementById('timer-start-btn').textContent = '▶ Start';
+  updateTimerDisplay();
+  updateRing();
+}
+
+function updateSessionDots() {
+  const dots = document.querySelectorAll('.session-dot');
+  dots.forEach((d, i) => {
+    d.className = 'session-dot';
+    if (i < completedSessions) d.classList.add('done');
+    else if (i === completedSessions) d.classList.add('current');
+  });
+}
+
+// ═══════════════ QUIZ ═══════════════
+const allQuestions = {
+  math: [
+    { q: "What is 7 × 8?", opts: ["54","56","48","63"], ans: 1 },
+    { q: "What is the square root of 144?", opts: ["11","14","12","13"], ans: 2 },
+    { q: "What is 15% of 200?", opts: ["20","25","30","35"], ans: 2 },
+    { q: "If a triangle has angles of 60° and 80°, what is the third angle?", opts: ["30°","40°","50°","60°"], ans: 1 },
+    { q: "What is 2³ (2 to the power of 3)?", opts: ["6","8","9","12"], ans: 1 },
+    { q: "Solve: 3x = 21. What is x?", opts: ["6","7","8","9"], ans: 1 },
+    { q: "What is the perimeter of a square with sides of 6cm?", opts: ["12cm","18cm","24cm","36cm"], ans: 2 },
+    { q: "What is 1/4 + 1/2?", opts: ["2/6","3/4","1/3","2/4"], ans: 1 },
+  ],
+  science: [
+    { q: "What gas do plants absorb during photosynthesis?", opts: ["Oxygen","Nitrogen","Carbon Dioxide","Hydrogen"], ans: 2 },
+    { q: "How many bones are in the adult human body?", opts: ["196","206","216","226"], ans: 1 },
+    { q: "What planet is known as the Red Planet?", opts: ["Venus","Jupiter","Saturn","Mars"], ans: 3 },
+    { q: "What is the chemical symbol for water?", opts: ["WA","HO","H₂O","W₂O"], ans: 2 },
+    { q: "What force keeps planets in orbit around the sun?", opts: ["Magnetism","Friction","Gravity","Electricity"], ans: 2 },
+    { q: "What organelle is known as the powerhouse of the cell?", opts: ["Nucleus","Ribosome","Mitochondria","Vacuole"], ans: 2 },
+    { q: "What is the speed of light (approximate)?", opts: ["150,000 km/s","300,000 km/s","500,000 km/s","1,000,000 km/s"], ans: 1 },
+    { q: "Which layer of Earth's atmosphere contains the ozone layer?", opts: ["Troposphere","Stratosphere","Mesosphere","Thermosphere"], ans: 1 },
+  ],
+  english: [
+    { q: "What is a word that describes a noun called?", opts: ["Verb","Adverb","Adjective","Pronoun"], ans: 2 },
+    { q: "What literary device is 'the stars danced' an example of?", opts: ["Simile","Metaphor","Personification","Alliteration"], ans: 2 },
+    { q: "Which of these is a synonym for 'happy'?", opts: ["Somber","Elated","Anxious","Weary"], ans: 1 },
+    { q: "What is the plural of 'child'?", opts: ["Childs","Childes","Children","Childrens"], ans: 2 },
+    { q: "In 'Romeo and Juliet', who wrote the play?", opts: ["Charles Dickens","Mark Twain","William Shakespeare","Jane Austen"], ans: 2 },
+    { q: "What is a group of lines in a poem called?", opts: ["Verse","Stanza","Couplet","Chorus"], ans: 1 },
+    { q: "What punctuation mark ends a question?", opts: ["Period","Exclamation mark","Comma","Question mark"], ans: 3 },
+    { q: "Which word is an antonym of 'ancient'?", opts: ["Old","Historical","Modern","Traditional"], ans: 2 },
+  ],
+  history: [
+    { q: "In what year did Christopher Columbus reach the Americas?", opts: ["1388","1492","1512","1620"], ans: 1 },
+    { q: "Who was the first President of the United States?", opts: ["John Adams","Benjamin Franklin","Thomas Jefferson","George Washington"], ans: 3 },
+    { q: "What ancient wonder was located in Alexandria, Egypt?", opts: ["The Colossus","The Lighthouse","The Hanging Gardens","The Great Pyramid"], ans: 1 },
+    { q: "What was the name of the ship that brought the Pilgrims to America in 1620?", opts: ["Santa Maria","Mayflower","Endeavour","Victoria"], ans: 1 },
+    { q: "Which empire built the Colosseum in Rome?", opts: ["Greek","Ottoman","Roman","Byzantine"], ans: 2 },
+    { q: "Who was the Egyptian queen who allied with Julius Caesar?", opts: ["Nefertiti","Cleopatra","Hatshepsut","Isis"], ans: 1 },
+    { q: "What year did World War II end?", opts: ["1943","1944","1945","1946"], ans: 2 },
+    { q: "What was the name of the first artificial satellite launched into space?", opts: ["Apollo","Voyager","Sputnik","Explorer"], ans: 2 },
+  ]
+};
+
+let quizSubject = 'mixed';
+let quizQuestions = [];
+let quizIndex = 0;
+let quizScore = 0;
+let quizAnswered = false;
+
+function selectSubject(subj, btn) {
+  quizSubject = subj;
+  document.querySelectorAll('.subj-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function startQuiz() {
+  document.getElementById('quiz-setup').style.display = 'none';
+  document.getElementById('quiz-results').style.display = 'none';
+  document.getElementById('quiz-game').style.display = 'block';
+  quizIndex = 0;
+  quizScore = 0;
+
+  if (quizSubject === 'mixed') {
+    let pool = [];
+    Object.values(allQuestions).forEach(arr => pool = pool.concat(arr));
+    pool.sort(() => Math.random() - 0.5);
+    quizQuestions = pool.slice(0, 10);
+  } else {
+    quizQuestions = [...allQuestions[quizSubject]].sort(() => Math.random() - 0.5).slice(0, 8);
+  }
+
+  loadQuestion();
+}
+
+function loadQuestion() {
+  quizAnswered = false;
+  const q = quizQuestions[quizIndex];
+  const total = quizQuestions.length;
+  document.getElementById('quiz-progress').style.width = `${(quizIndex / total) * 100}%`;
+  document.getElementById('quiz-q-num').textContent = `Question ${quizIndex + 1} of ${total}`;
+
+  const subjLabels = { mixed: '🌟 Mixed', math: '📐 Math', science: '🔬 Science', english: '📖 English', history: '🏛️ History' };
+  const subjClasses = { mixed: 'badge-mixed', math: 'badge-math', science: 'badge-science', english: 'badge-english', history: 'badge-history' };
+  const badge = document.getElementById('quiz-subj-badge');
+  badge.textContent = subjLabels[quizSubject];
+  badge.className = `subject-badge ${subjClasses[quizSubject]}`;
+
+  document.getElementById('quiz-question').textContent = q.q;
+  document.getElementById('quiz-feedback').className = 'quiz-feedback';
+  document.getElementById('quiz-feedback').textContent = '';
+  document.getElementById('quiz-next-btn').style.display = 'none';
+
+  const optsEl = document.getElementById('quiz-options');
+  optsEl.innerHTML = q.opts.map((opt, i) => `
+    <button class="quiz-opt" onclick="answerQuiz(${i})">${opt}</button>
+  `).join('');
+}
+
+function answerQuiz(i) {
+  if (quizAnswered) return;
+  quizAnswered = true;
+  const q = quizQuestions[quizIndex];
+  const opts = document.querySelectorAll('.quiz-opt');
+  opts.forEach(o => o.disabled = true);
+  opts[q.ans].classList.add('correct');
+  const fb = document.getElementById('quiz-feedback');
+
+  if (i === q.ans) {
+    quizScore++;
+    opts[i].classList.add('correct');
+    fb.textContent = '✅ Correct! Great job!';
+    fb.className = 'quiz-feedback correct-fb show';
+  } else {
+    opts[i].classList.add('wrong');
+    fb.textContent = `❌ Not quite! The correct answer was: ${q.opts[q.ans]}`;
+    fb.className = 'quiz-feedback wrong-fb show';
+  }
+
+  if (quizIndex < quizQuestions.length - 1) {
+    document.getElementById('quiz-next-btn').style.display = 'inline-flex';
+  } else {
+    setTimeout(showResults, 1200);
+  }
+}
+
+function nextQuestion() {
+  quizIndex++;
+  loadQuestion();
+}
+
+function showResults() {
+  document.getElementById('quiz-game').style.display = 'none';
+  document.getElementById('quiz-results').style.display = 'block';
+  const total = quizQuestions.length;
+  const pct = quizScore / total;
+  const emojis = pct === 1 ? '🏆' : pct >= 0.8 ? '🌟' : pct >= 0.6 ? '👍' : pct >= 0.4 ? '📚' : '💪';
+  const titles = pct === 1 ? 'Perfect Score!' : pct >= 0.8 ? 'Excellent Work!' : pct >= 0.6 ? 'Good Job!' : pct >= 0.4 ? 'Keep Studying!' : 'Keep Practicing!';
+  const subs = pct === 1 ? 'You got every question right — amazing!' : pct >= 0.8 ? 'You really know your stuff!' : pct >= 0.6 ? 'Solid effort — review the ones you missed.' : 'Review the material and try again!' ;
+  document.getElementById('result-emoji').textContent = emojis;
+  document.getElementById('result-title').textContent = titles;
+  document.getElementById('result-score').textContent = `${quizScore} / ${total}`;
+  document.getElementById('result-sub').textContent = subs;
+}
+
+// set today as default date for homework
+document.getElementById('hw-due').value = new Date(Date.now() + 86400000).toISOString().split('T')[0];
+</script>
+</body>
+</html>
